@@ -1,0 +1,22 @@
+{%extends 'layouts/layout.html'%}
+{% block content %}
+{% include 'common/navbar_login_user.html' %}
+<h1 style="text-align: center;">Delivery Details</h1>
+<div class="container">
+    <form class="col s12" action="{% url 'delivery' %}" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" name="address" placeholder="Address">
+                {% for error in form.address.errors %}
+                    <div>{{error}}</div><br>
+                {% endfor %}
+            </div>
+            <div class="input-field col s12">
+                <textarea name="comment" placeholder="Comment"></textarea>
+            </div>
+            <button type="submit" class="waves-effect waves-light btn">Confirm Delivery Details</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

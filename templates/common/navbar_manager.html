@@ -1,0 +1,18 @@
+
+
+<nav>
+    <div class="nav-wrapper">
+      <a class="brand-logo">Resturant</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="{% url 'show-deliveries-not-deliver-yet' %}">Manage Deliveries</a></li>
+        <li><a href="{% url 'show-deliveries-history' %}">Deliveries History</a></li>
+        <li><a href="{% url 'add-category' %}">Add Category</a></li>
+        <li><a href="{% url 'show-manager-categories' %}">Edit Category</a></li>
+        <li><a href="{% url 'show-manager-categories' %}">Delete Category</a></li>
+        <li><a href="{% url 'add-dish' %}">Add Dish</a></li>
+        <li><a href="{% url 'show-manager-dishes' %}">Edit Dish</a></li>
+        <li><a href="{% url 'show-manager-dishes' %}">Delete Dish</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+      </ul>
+    </div>
+  </nav>

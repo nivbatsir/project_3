@@ -1,0 +1,77 @@
+{%extends 'layouts/layout.html'%}
+{% block content %}
+{% include 'common/navbar_manager.html' %}
+
+<h1 style="text-align: center;"> Deliveries Details</h1>
+
+<div class="container">
+    <table class="striped centered">
+        <thead>
+          <tr>
+              <th>Username</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Order ID</th>
+              <th>Address</th>
+              <th>Comment</th>
+              <th>Created</th>
+              <th>Is Delivered</th>
+              <th>Delivery</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{delivery.order_id.user.username}}</td>
+            <td>{{delivery.order_id.user.first_name}}</td>
+            <td>{{delivery.order_id.user.last_name}}</td>
+            <td>{{delivery.order_id.id}}</td>
+            <td>{{delivery.address}}</td>
+            <td>{{delivery.comment | linebreaks}}</td>
+            <td>{{delivery.created | date:"d/m/Y H:i"}}</td>
+            {% if delivery.is_delivered %}
+            <td>Yes</td>
+            {% else %}
+            <td>No</td>
+            {% endif %}
+            <td>
+                <form action="{% url 'is-delivered' id=delivery.order_id.id %}" method="POST">
+                    {% csrf_token %}
+                    <button {% if delivery.is_delivered %} disabled {% endif %} type="submit" class="waves-effect waves-light btn">To Delivery</button>  
+                </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <br>
+      <table class="striped centered" style="border: 1px solid black;">
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Price Per Unit</th>
+              <th>Amount</th>
+              <th>Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item,total_raw in items_and_total_raw_list %}
+          <tr>
+            <td>{{item.dish.name}}</td>
+            <td><img src="{{item.dish.image}}"></td>
+            <td>{{item.dish.price}}$</td>
+            <td>{{item.amount}}</td>
+            <td>{{total_raw}}$</td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Sum: {{total_sum}}$</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+{% endblock content %}

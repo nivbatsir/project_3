@@ -1,0 +1,31 @@
+{%extends 'layouts/layout.html'%}
+{% block content %}
+{% include 'common/navbar_after_delivery.html' %}
+
+<h1 style="text-align: center;">My Delivery Details</h1>
+
+<div class="container">
+    <table class="striped centered">
+        <thead>
+          <tr>
+              <th>Username</th>
+              <th>Order ID</th>
+              <th>Address</th>
+              <th>Comment</th>
+              <th>Created</th>
+              <th>Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{delivery_information.order_id.user.username}}</td>
+            <td>{{delivery_information.order_id.id}}</td>
+            <td>{{delivery_information.address}}</td>
+            <td>{{delivery_information.comment | linebreaks}}</td>
+            <td>{{delivery_information.created | date:"d/m/Y H:i"}}</td>
+            <td> {{total}}$</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+{% endblock content %}

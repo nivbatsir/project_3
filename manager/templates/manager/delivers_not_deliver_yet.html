@@ -1,0 +1,46 @@
+{%extends 'layouts/layout.html'%}
+{% block content %}
+{% include 'common/navbar_manager.html' %}
+
+<h1 style="text-align: center;"> Deliveries Details</h1>
+
+<div class="container">
+    <table class="striped centered">
+        <thead>
+          <tr>
+              <th>Username</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Order ID</th>
+              <th>Address</th>
+              <th>Comment</th>
+              <th>Created</th>
+              <th>Is Delivered</th>
+              <th>Order Details</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for delivery in deliveries %}
+                {% if delivery.is_delivered == False %}
+                    <tr style="background-color: tomato;">
+                        <td>{{delivery.order_id.user.username}}</td>
+                        <td>{{delivery.order_id.user.first_name}}</td>
+                        <td>{{delivery.order_id.user.last_name}}</td>
+                        <td>{{delivery.order_id.id}}</td>
+                        <td>{{delivery.address}}</td>
+                        <td>{{delivery.comment | linebreaks}}</td>
+                        <td>{{delivery.created | date:"d/m/Y H:i"}}</td>
+                        <td>No</td>
+                        <td>
+                            <form action="{% url 'show-delivery-and-order' id=delivery.order_id.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="waves-effect waves-light btn">Order details and delivery</button>  
+                            </form>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock content %}

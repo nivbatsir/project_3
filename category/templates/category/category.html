@@ -1,0 +1,51 @@
+{%extends 'layouts/layout.html'%}
+{% load static %}
+{% block content %}
+{% include 'common/navbar_login_user.html' %}
+
+<h1 style="text-align: center;">{{category.name}}</h1>
+
+{% if is_cart_empty %}
+<h3 style="text-align: center;color: brown;">Your curret cart is still empty</h3>
+{% else %}
+<h3>Have you finished ordering?</h3>
+<a href="{% url 'show-cart' %}" class="waves-effect waves-light btn">To your cart</a>
+{%  endif%}
+
+{% for dish in dishes %}
+<div class="row">
+    <div class="col s6 m2">
+      <div class="card">
+        <div class="card-image">
+          <img src="{{dish.image}}" alt="{{dish.name}}">
+          <br>
+          <p style="text-decoration: underline; font-weight: bold;">{{dish.name | title}}</p>
+          <p>Price: {{dish.price}}$</p>
+          {% if dish.is_gluten_free %}
+            <p style="color: green;">free gluten</p>
+          {% else %}
+            <p style="color: red;">contained gluten</p>
+          {% endif %}
+          {% if dish.is_vegeterian %}
+            <p style="color: green;">vegeterian</p>
+          {% else %}
+            <p style="color: red;">non vegetarian</p>
+          {% endif %}
+          <form action="{% url 'add-dish' id=dish.id %}" method="POST">
+            {% csrf_token %}
+              <input id="amount" type="number" placeholder="Amount" name="amount" min="1" required>
+              <label for="amount">Amount</label>
+              <br>
+              <br>
+              <button type="submit" class="btn-floating halfway-fab waves-effect waves-light red">Add</button>
+          </form>
+        </div>
+        <div class="card-content">
+          
+          <p><span style="text-decoration: underline;">Description</span>{{dish.description | linebreaks}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% endblock content %}

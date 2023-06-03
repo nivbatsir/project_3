@@ -1,0 +1,46 @@
+{%extends 'layouts/layout.html'%}
+{% block content %}
+{% include 'common/navbar_manager.html' %}
+
+<h1 style="text-align: center;"> Edit and Delete Categories</h1>
+
+<div class="container">
+    <ul>   
+        {% for message in messages %}  
+            {% if 'success' == message.tags %}  
+                    <li style="color: green; font-weight: bold">{{ message }}</li>    
+            {% endif %} 
+        {% endfor %}  
+    </ul> 
+    <table class="striped centered">
+        <thead>
+          <tr>
+              <th>Category Name</th>
+              <th>Image</th>
+              <th>Edit Category</th>
+              <th>Delete Category</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+                    <tr>
+                        <td>{{category.name}}</td>
+                        <td><img src="{{category.image}}" alt="{{category.name}}"></td>
+                        <td>
+                            <form action="{% url 'edit-category' id=category.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="waves-effect waves-light btn">Edit</button>  
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{% url 'delete-category' id=category.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="waves-effect waves-light btn">Delete</button>  
+                            </form>
+                        </td>
+                    </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{%extends 'layouts/layout.html'%}
+{% block content %}
+{% include 'common/navbar_manager.html' %}
+<h1 style="text-align: center;">Add Category</h1>
+<div class="container">
+    <ul>   
+        {% for message in messages %}  
+                    <li style="color: red; font-weight: bold">{{ message }}</li>  
+        {% endfor %}  
+    </ul>  
+    <form class="col s12" action="{% url 'add-category' %}" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" name="name" placeholder="Category Name">
+                {% for error in form.name.errors %}
+                    <div>{{error}}</div><br>
+                {% endfor %}
+            </div>
+            <div class="input-field col s12">
+                <textarea name="image" placeholder="Image Relative Path"></textarea>
+            </div>
+            <button type="submit" class="waves-effect waves-light btn">Add Category</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

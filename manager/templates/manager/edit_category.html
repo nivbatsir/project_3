@@ -1,0 +1,29 @@
+{%extends 'layouts/layout.html'%}
+{% block content %}
+{% include 'common/navbar_manager.html' %}
+<h1 style="text-align: center;">Edit Category</h1>
+<div class="container">
+    <ul>   
+        {% for message in messages %}  
+                    <li style="color: red; font-weight: bold">{{ message }}</li>  
+        {% endfor %}  
+    </ul>  
+    <form class="col s12" action="{% url 'edit-category' id=category.id %}" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="category_name" type="text" name="name" value="{{category.name}}">
+                <label for="category_name">Category Name</label>
+                {% for error in form.name.errors %}
+                    <div>{{error}}</div><br>
+                {% endfor %}
+            </div>
+            <div class="input-field col s12">
+                <textarea id="category_image" name="image" placeholder="Image Relative Path">{{category.image}}</textarea>
+                <label for="category_image">Image Relative Path</label>
+            </div>
+            <button type="submit" class="waves-effect waves-light btn">Edit Category</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

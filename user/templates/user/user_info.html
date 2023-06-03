@@ -1,0 +1,12 @@
+{%extends 'layouts/layout.html'%}
+{% block content %}
+{% include 'common/navbar_login_user.html' %}
+<h1 style="text-align: center;">User Details</h1>
+<div class="container">
+    <p style="text-decoration: underline;font-weight: bold;">Username: <span>{{user.username}}</span></p>
+    <p style="text-decoration: underline;font-weight: bold;">First Name: <span>{{user.first_name}}</span></p>
+    <p style="text-decoration: underline;font-weight: bold;">Last Name: <span>{{user.last_name}}</span></p>
+    <p style="text-decoration: underline;font-weight: bold;">Email: <span>{{user.email}}</span></p>
+    <p style="text-decoration: underline;font-weight: bold;">Is staff: <span>{% if user.is_staff %} Yes {% else %} No {% endif %}</span></p>
+</div>
+{% endblock content %}

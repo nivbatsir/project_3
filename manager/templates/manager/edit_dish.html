@@ -1,0 +1,58 @@
+{%extends 'layouts/layout.html'%}
+{% block content %}
+{% include 'common/navbar_manager.html' %}
+<h1 style="text-align: center;">Edit Dish</h1>
+<div class="container"> 
+    <ul>   
+        {% for message in messages %}  
+                    <li style="color: red; font-weight: bold">{{ message }}</li>  
+        {% endfor %}  
+    </ul> 
+    <form class="col s12" action="{% url 'edit-dish' id=dish.id %}" method="POST" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" id="dish_name" name="name" placeholder="Dish Name" value="{{dish.name}}">
+                <label for="dish_name">Dish Name</label>
+                {% for error in form.name.errors %}
+                    <div>{{error}}</div><br>
+                {% endfor %}
+            </div>
+            <div class="input-field col s12">
+                <input type="number" id="price" name="price" placeholder="Price" min="1" value="{{dish.price}}">
+                <label for="price">Price</label>
+                {% for error in form.price.errors %}
+                    <div>{{error}}</div><br>
+                {% endfor %}
+            </div>
+            <div class="input-field col s12">
+                <textarea name="description" id="description" placeholder="Description">{{dish.description}}</textarea>
+                <label for="description">Description</label>
+            </div>
+            <div class="input-field col s12">
+                <textarea name="image" id="image" placeholder="Image Relative Path">{{dish.image}}</textarea>
+                <label for="image">Image Relative Path</label>
+            </div>
+            <p>
+                <label>
+                  <input type="checkbox" class="filled-in" name="is_gluten_free" {% if dish.is_gluten_free %} checked {% endif %}/>
+                  <span>Is Gluten Free</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                  <input type="checkbox" class="filled-in" name="is_vegeterian" {% if dish.is_vegeterian %} checked {% endif %}/>
+                  <span>Is Vegeterian</span>
+                </label>
+            </p>
+            <select class="browser-default" name="category_id" >
+              <option value="" disabled selected>Choose Dish Category</option>
+              {% for category in categories %}
+              <option value="{{category.id}}">{{category.name}}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="waves-effect waves-light btn">Edit Dish</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,54 @@
+{%extends 'layouts/layout.html'%}
+{% load static %}
+{% block content %}
+{% include 'common/navbar_login_user.html' %}
+<h1 style="text-align: center;">My Carts History</h1>
+{% if non_carts_history %}
+    <h3 style="text-align: center;color: brown;">You not have carts history yet</h3>
+{% else %}
+    <div class="container" >
+        {% for cart,sum,delivery_date,delivery_success in history_sum_date_success_lists %}
+        {% if delivery_success %}
+            <br>
+            <h5 style="color: green;">Delivery Date: {{delivery_date | date:"d/m/Y H:i"}}</h5>
+            <h5 style="color: green;">Is Delivered Success: Yes</h5>
+            <br>
+        {% else %}
+            <br>
+            <h5 style="color: red;">Delivery Date: {{delivery_date | date:"d/m/Y H:i"}}</h5>
+            <h5 style="color: red;">Is Delivered Success: Not yet</h5>
+            <br>
+        {% endif %}
+        <table class="striped centered" style="border: 1px solid black;">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Price Per Unit</th>
+                <th>Amount</th>
+                <th>Total Price</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for item in cart.item_set.all %}
+                    <tr>
+                        <td>{{item.dish.name}}</td>
+                        <td><img src="{{item.dish.image}}"></td>
+                        <td>{{item.dish.price}}$</td>
+                        <td>{{item.amount}}</td>
+                        <td>{% widthratio item.amount 1 item.dish.price %}$</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Sum: {{sum}}$</td>
+                </tr>
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endblock content %}

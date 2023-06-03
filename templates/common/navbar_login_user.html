@@ -1,0 +1,13 @@
+<nav>
+    <div class="nav-wrapper">
+      <a class="brand-logo">Resturant</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="{% url 'show-categories' %}">Menu</a></li>
+        <li><a href="{% url 'show-cart' %}">My Cart</a></li>
+        <li><a href="{% url 'show-carts-history' %}">My Carts History</a></li>
+        <li><a href="{% url 'change-user-details' %}">Change User Detials</a></li>
+        <li><a href="{% url 'user-info' %}">User Detials</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+      </ul>
+    </div>
+  </nav>

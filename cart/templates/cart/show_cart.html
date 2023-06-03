@@ -1,0 +1,53 @@
+{%extends 'layouts/layout.html'%}
+{% load static %}
+{% block content %}
+{% include 'common/navbar_login_user.html' %}
+<h1 style="text-align: center;">My Current Cart</h1>
+
+{% if is_cart_empty %}
+<h3 style="text-align: center;color: brown;">Your curret cart is still empty</h3>
+{% else %}
+<div style="text-align: center;">
+  <h5>To complete the purchase, you must fill in delivery details</h5>
+  <a href="{% url 'delivery' %}" class="waves-effect waves-light btn">To fill delivery details</a>
+</div>
+<div class="container">
+    <table class="striped centered">
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Price Per Unit</th>
+              <th>Amount</th>
+              <th>Total Price</th>
+              <th>Remove From Cart</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item,total_raw in items_and_total_raw_list %}
+          <tr>
+            <td>{{item.dish.name}}</td>
+            <td><img src="{{item.dish.image}}"></td>
+            <td>{{item.dish.price}}$</td>
+            <td>{{item.amount}}</td>
+            <td>{{total_raw}}$</td>
+            <td>
+              <form action="{% url 'remove-item' id=item.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="waves-effect waves-light btn">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Sum: {{total_sum}}$</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+{% endif %}
+{% endblock content %}

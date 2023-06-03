@@ -1,0 +1,34 @@
+{%extends 'layouts/layout.html'%}
+{% block content %}
+{% include 'common/navbar_before_login_user.html' %}
+<h1 style="text-align: center;">Login</h1>
+<div class="container">
+    <ul>   
+        {% for message in messages %}  
+            {% if 'success' == message.tags %}  
+                    <li style="color: green; font-weight: bold">{{ message }}</li>  
+            {% else %}
+                    <li style="color: red; font-weight: bold">{{ message }}</li>  
+            {% endif %} 
+        {% endfor %}  
+    </ul>   
+        <form class="col s12" action="{% url 'login' %}" method="POST" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="username" type="text" name="username" placeholder="Username">
+                    {% for error in form.username.errors %}
+                        <div>{{error}}</div><br>
+                    {% endfor %}
+                </div>
+                <div class="input-field col s12">
+                    <input id="password" type="password" name="password" placeholder="Password">
+                    {% for error in form.password.errors %}
+                        <div>{{error}}</div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="waves-effect waves-light btn">Login</button>
+            </div>
+        </form>
+</div>
+{% endblock content %}

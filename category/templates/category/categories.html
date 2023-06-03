@@ -1,0 +1,28 @@
+{%extends 'layouts/layout.html'%}
+{% load static %}
+{% block content %}
+{% include 'common/navbar_login_user.html' %}
+<h1 style="text-align: center;">Menu by Categories</h1>
+{% if is_cart_empty %}
+<h3 style="text-align: center;color: brown;">Your curret cart is still empty</h3>
+{% else %}
+<h3 style="text-align: center;">Have you finished ordering?</h3>
+<div style="text-align: center;">
+    <a  href="{% url 'show-cart' %}" class="waves-effect waves-light btn">To your cart</a>
+</div>
+{%  endif%}
+{% for category in categories %}
+<div class="row">
+    <div class="col s6 m2">
+      <div class="card">
+        <div class="card-image">
+          <img src="{{category.image}}" alt="{{category.name}}">
+        </div>
+        <div class="card-action">
+          <a href="{% url 'show-category' category_name=category.name %}">{{category.name}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% endblock content %}
